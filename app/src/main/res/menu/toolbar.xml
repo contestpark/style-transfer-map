@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toolbar_public"
+        android:icon="@drawable/ic_public_black_24dp"
+        android:title="confirm"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/toolbar_share_kakao"
+        android:icon="@drawable/ic_public_black_24dp"
+        android:title="confirm"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/toolbar_download"
+        android:icon="@drawable/ic_public_black_24dp"
+        android:title="confirm"
+        app:showAsAction="ifRoom"/>
+</menu>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+    tools:context=".MainActivity">
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <com.luseen.spacenavigation.SpaceNavigationView
+        android:id="@+id/navibar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:space_item_icon_only_size="26dp"
+        app:space_background_color="@color/colorPrimary"
+        app:centre_button_color="@color/colorAccent"
+        app:centre_button_icon="@drawable/ic_camera_black_24dp"
+        app:inactive_centre_button_icon_color="@color/colorPrimary"
+        app:inactive_item_color="@color/colorGray"
+        app:active_item_color="@color/colorAccent">
+    </com.luseen.spacenavigation.SpaceNavigationView>
+
+
+</LinearLayout>
