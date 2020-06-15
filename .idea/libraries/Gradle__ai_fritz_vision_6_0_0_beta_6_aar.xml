@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.fritz:vision:6.0.0-beta.6@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f59c343f293299f3003e0282203a50a6/jetified-vision-6.0.0-beta.6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f59c343f293299f3003e0282203a50a6/jetified-vision-6.0.0-beta.6/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

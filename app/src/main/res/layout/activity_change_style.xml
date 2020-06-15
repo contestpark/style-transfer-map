@@ -56,6 +56,16 @@
 
     </FrameLayout>
 
+    <!--
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_c"
+        android:layout_gravity="center_vertical"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+        -->
+
     <ImageView
         android:id="@+id/image_change_style"
         android:layout_width="match_parent"

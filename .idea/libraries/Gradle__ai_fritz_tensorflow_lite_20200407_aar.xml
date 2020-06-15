@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.fritz:tensorflow-lite:20200407@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cd882ac2c3859491cfe0467545004b9c/jetified-tensorflow-lite-20200407/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cd882ac2c3859491cfe0467545004b9c/jetified-tensorflow-lite-20200407/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

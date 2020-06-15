@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.cryptonode.jncryptor:jncryptor:1.2.0@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.cryptonode.jncryptor/jncryptor/1.2.0/78f3dffa2920df4a95eef760256fdbbb2c94b0e9/jncryptor-1.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.cryptonode.jncryptor/jncryptor/1.2.0/63adc786b70070560412a7574698794e75b2b5aa/jncryptor-1.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.cryptonode.jncryptor/jncryptor/1.2.0/8a9adeb0879d65aaa1d014c497b1cadc19b4969c/jncryptor-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

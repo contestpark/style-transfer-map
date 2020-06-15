@@ -38,6 +38,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "ai.fritz:core:6.0.0-beta.6"
     implementation "ai.fritz:vision:6.0.0-beta.6"
+    implementation 'ai.fritz:vision-style-painting-models:3.0.0'
 
     implementation 'com.github.armcha:SpaceNavigationView:1.6.0'
 }
