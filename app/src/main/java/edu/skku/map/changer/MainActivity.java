@@ -3,6 +3,7 @@ package edu.skku.map.changer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -11,7 +12,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private FragmentCommunity fragmentCommunity;
     private FragmentAnalysis fragmentAnalysis;
-    private static final int REQUEST_CODE = 0;
+    private static final int REQUEST_CODE = 777;
     private File newImageFile;
     private Uri uri;
     private static final String API_KEY = "5168cce7d9794bc299881a6d6966e1b1";
@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                     newImageFile = new File(cursor.getString(column_index));
 
                     uri = photoUri;
+
+
                     Intent intent = new Intent(this, ChangeStyleActivity.class);
                     intent.putExtra("uri", uri);
                     startActivity(intent);

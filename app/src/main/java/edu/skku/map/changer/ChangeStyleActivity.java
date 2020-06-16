@@ -8,18 +8,26 @@ import ai.fritz.vision.styletransfer.FritzVisionStylePredictorOptions;
 import ai.fritz.vision.styletransfer.FritzVisionStyleResult;
 import ai.fritz.vision.styletransfer.PaintingManagedModels;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapRegionDecoder;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Size;
@@ -32,9 +40,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ai.fritz.vision.FritzVision;
@@ -50,6 +62,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Filter> filters = new ArrayList<>();
     private Bitmap original;
+    private Bitmap changed;
     private ImageView back_button;
     private TextView save_button;
     private TextView share_button;
@@ -63,7 +76,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_style);
 
@@ -81,17 +94,20 @@ public class ChangeStyleActivity extends AppCompatActivity {
 
         // 사진 받아와서 띄우기
         Intent intent = getIntent();
-        uri = Uri.parse(String.valueOf(intent.getParcelableExtra("uri")));
+        String path = String.valueOf(intent.getParcelableExtra("uri"));
+        uri = Uri.parse(path);
         imageView.setImageURI(uri);
 
 
         try {
-            ExifInterface exif = new ExifInterface(uri.getPath());
+            ExifInterface exif = new ExifInterface(getRealPathFromURI(uri));
+            Log.v("error", "next");
             int exifOrientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             exifDegree = exifOrientationToDegrees(exifOrientation);
         } catch (IOException e) {
-            Log.v("error", "갸아아악");
+            Log.v("error", e.toString());
+            Log.v("error", e.getMessage());
             e.printStackTrace();
         }
 
@@ -101,6 +117,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
             original = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
             width = original.getWidth();
             height = original.getHeight();
+            changed = original;
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "오류가 발생했습니다", Toast.LENGTH_SHORT).show();
@@ -149,7 +166,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
                     int currentPosition = rv.getChildAdapterPosition(childView);
                     Filter currentFilter = filters.get(currentPosition);
 
-                    if (currentFilter.getName().equals("원본")) { imageView.setImageBitmap(original); }
+                    if (currentFilter.getName().equals("원본")) { changed = original; }
                     else {
                         if (currentFilter.getName().equals("반고흐")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getStarryNight());
@@ -183,11 +200,11 @@ public class ChangeStyleActivity extends AppCompatActivity {
                         //Size targetSize = new Size(2048, 2048);
                         //Bitmap bitmap = styleResult.toBitmap(targetSize);
                         Size target = new Size(width, height);
-                        Bitmap styledBitmap = styleResult.toBitmap(target);
-                        imageView.setImageBitmap(rotate(styledBitmap, exifDegree));
-                        //hideDialog();
-                        return true;
+                        changed = styleResult.toBitmap(target);
                     }
+
+                    imageView.setImageBitmap(rotate(changed, exifDegree));
+                    return true;
                 }
                 //hideDialog();
                 return false;
@@ -198,6 +215,67 @@ public class ChangeStyleActivity extends AppCompatActivity {
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) { }
         });
+
+        save_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                Log.v("error2", saveToInternalStorage(changed));
+                Toast.makeText(ChangeStyleActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        share_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                Log.v("error?", changed.toString());
+
+                String imagePath = saveToInternalStorage(changed);
+                Uri shareUri = Uri.parse(imagePath);
+
+                sharingIntent.setType("image/*");
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, shareUri);
+                startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+            }
+        });
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String saveToInternalStorage(Bitmap bitmapImage){
+        /*
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("Changer", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath = new File(directory,"profile.jpg");
+
+         */
+        File root =new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Changer");
+        if (!root.exists()) {root.mkdir();}
+        File mypath = new File(root, getDate_and_time() + ".jpg");
+
+        FileOutputStream fos = null;
+        Log.v("error4", mypath.toString());
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.v("error1", e.toString());
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                Log.v("error1", e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return mypath.getAbsolutePath();
     }
 
 
@@ -229,5 +307,27 @@ public class ChangeStyleActivity extends AppCompatActivity {
         else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) { return 180; }
         else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) { return 270; }
         return 0;
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        cursor.moveToNext();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+       // Uri uri = Uri.fromFile(new File(path));
+
+        cursor.close();
+        return path;
+    }
+
+    public String getDate_and_time()
+    {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String datestr = sdf.format(cal.getTime());
+
+        return datestr;
     }
 }
