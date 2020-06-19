@@ -12,9 +12,9 @@
         <activity android:name=".PostDetailActivity"></activity>
         <activity android:name=".fragment.FragmentAnalysis" />
         <activity android:name=".ChangeStyleActivity" />
-        <activity android:name=".PostDetailActivity" />
         <activity android:name=".fragment.FragmentCommunity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

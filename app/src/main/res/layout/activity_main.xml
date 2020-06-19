@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:gravity="bottom"
         app:space_item_icon_only_size="26dp"
         android:background="@color/space_transparent"
         app:space_background_color="@color/colorPrimary"

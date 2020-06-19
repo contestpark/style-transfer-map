@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 777;
     private File newImageFile;
     private Uri uri;
+    private String name;
+    private String user_key;
+    private Uri profile;
     private static final String API_KEY = "5168cce7d9794bc299881a6d6966e1b1";
 
     @Override
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fritz.configure(this, API_KEY);
+
 
         spaceNavigationView = (SpaceNavigationView) findViewById(R.id.navibar);
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);

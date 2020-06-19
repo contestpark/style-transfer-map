@@ -5,19 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorPrimary">
 
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        tools:context=".fragment.FragmentCommunity">
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -35,25 +32,25 @@
             android:fontFamily="@font/dotummedium"
             android:textColor="@color/colorGray"
             android:layout_marginLeft="5dp"
-            android:text="다른 사용자들이 공유한 사진을 구겅해 보세요"/>
+            android:text="다른 사용자들이 공유한 사진을 구경해 보세요"/>
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:orientation="vertical"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_post"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".fragment.FragmentCart"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:overScrollMode="never"
+            android:layout_marginBottom="55dp">
+        </androidx.recyclerview.widget.RecyclerView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar_com"
+            android:layout_gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

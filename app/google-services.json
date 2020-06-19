@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "549426654055",
+    "firebase_url": "https://styletransfer-ffe83.firebaseio.com",
+    "project_id": "styletransfer-ffe83",
+    "storage_bucket": "styletransfer-ffe83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549426654055:android:992c84fa388f24acfdddc2",
+        "android_client_info": {
+          "package_name": "edu.skku.map.changer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549426654055-fc0ki8oon0ii86v8u5qkdjn7hsi9gps2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.skku.map.changer",
+            "certificate_hash": "a1c298846f1c6e49f423cae9d9719df3402504fc"
+          }
+        },
+        {
+          "client_id": "549426654055-u51p1sdpd3ejvlphb1skfdulktiifsk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh0WnUMRsJwl-OEckt76sRI3HSEW9JX10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549426654055-u51p1sdpd3ejvlphb1skfdulktiifsk9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

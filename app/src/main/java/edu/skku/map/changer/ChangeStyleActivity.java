@@ -9,6 +9,7 @@ import ai.fritz.vision.styletransfer.FritzVisionStyleResult;
 import ai.fritz.vision.styletransfer.PaintingManagedModels;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -40,6 +42,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,6 +60,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
@@ -55,6 +68,8 @@ import ai.fritz.vision.styletransfer.FritzVisionStylePredictor;
 import ai.fritz.vision.styletransfer.PaintingStyleModels;
 import edu.skku.map.changer.entities.Filter;
 import edu.skku.map.changer.entities.FilterAdapter;
+import edu.skku.map.changer.entities.Post;
+import edu.skku.map.changer.entities.Preference;
 
 public class ChangeStyleActivity extends AppCompatActivity {
     private Uri uri;
@@ -69,10 +84,12 @@ public class ChangeStyleActivity extends AppCompatActivity {
     private FritzVisionStylePredictor predictor;
     private GestureDetector gestureDetector;
     private PaintingStyleModels paintingStyleModels;
+    //private ProgressBar mProgressbar;
     private int width;
     private int height;
     private int exifDegree;
-   // private ProgressBar progressBar;
+    private String filter_flag = "";
+    private Preference preference;
 
 
     @Override
@@ -89,7 +106,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) { finish(); }});
         recyclerView = findViewById(R.id.rv_filter);
-       // progressBar = findViewById(R.id.progressBar_c);
+       // mProgressbar = findViewById(R.id.progressBar_c);
 
 
         // 사진 받아와서 띄우기
@@ -166,30 +183,44 @@ public class ChangeStyleActivity extends AppCompatActivity {
                     int currentPosition = rv.getChildAdapterPosition(childView);
                     Filter currentFilter = filters.get(currentPosition);
 
-                    if (currentFilter.getName().equals("원본")) { changed = original; }
+                    if (currentFilter.getName().equals("원본")) {
+                        changed = original;
+                        filter_flag = "";
+                    }
                     else {
                         if (currentFilter.getName().equals("반고흐")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getStarryNight());
+                            filter_flag =  "Gogh";
                         } else if (currentFilter.getName().equals("뭉크")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getTheScream());
+                            filter_flag =  "Munch";
                         } else if (currentFilter.getName().equals("모네")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getPoppyField());
+                            filter_flag =  "Monet";
                         } else if (currentFilter.getName().equals("리히텐슈타인")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getBicentennialPrint());
+                            filter_flag =  "Lichtenstein";
                         } else if (currentFilter.getName().equals("피카소")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getFemmes());
+                            filter_flag =  "Picasso";
                         } else if (currentFilter.getName().equals("쿠터")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getHeadOfClown());
+                            filter_flag =  "Kutter";
                         } else if (currentFilter.getName().equals("키리코")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getHorsesOnSeashore());
+                            filter_flag =  "Chirico";
                         } else if (currentFilter.getName().equals("시드니놀란")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getTheTrial());
+                            filter_flag =  "Nolan";
                         } else if (currentFilter.getName().equals("세베리니")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getRitmoPlastico());
+                            filter_flag =  "Severini";
                         } else if (currentFilter.getName().equals("망원경")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getKaleidoscope());
+                            filter_flag =  "Kaleidoscope";
                         } else if (currentFilter.getName().equals("마름모")) {
                             predictor = FritzVision.StyleTransfer.getPredictor(paintingStyleModels.getPinkBlueRhombus());
+                            filter_flag =  "Rhombuses";
                         }
 
 
@@ -221,6 +252,32 @@ public class ChangeStyleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.v("error2", saveToInternalStorage(changed));
+                final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                if (filter_flag == null || filter_flag.length() != 0) {
+                    db.collection("User").document(firebaseAuth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            preference = new Preference(documentSnapshot.getData());
+                            preference.updateData(filter_flag);
+                            db.collection("User").document(firebaseAuth.getCurrentUser().getEmail()).update(preference.toPreference());
+                        }
+                    });
+                    db.collection("Filter").document("Filter").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            preference = new Preference(documentSnapshot.getData());
+                            preference.updateData(filter_flag);
+                            db.collection("Filter").document("Filter").update(preference.toPreference());
+                        }
+                    });
+                }
+                Log.v("error", filter_flag);
+
                 Toast.makeText(ChangeStyleActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
             }
         });
@@ -229,15 +286,93 @@ public class ChangeStyleActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                Log.v("error?", changed.toString());
+                final CharSequence[] shareWhich = {"해당 앱 사용자에게 공유", "기타 공유"};
+                final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-                String imagePath = saveToInternalStorage(changed);
-                Uri shareUri = Uri.parse(imagePath);
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                sharingIntent.setType("image/*");
-                sharingIntent.putExtra(Intent.EXTRA_STREAM, shareUri);
-                startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                if (filter_flag == null || filter_flag.length() != 0) {
+                    db.collection("User").document(firebaseAuth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            preference = new Preference(documentSnapshot.getData());
+                            preference.updateData(filter_flag);
+                            db.collection("User").document(firebaseAuth.getCurrentUser().getEmail()).update(preference.toPreference());
+                        }
+                    });
+                    db.collection("Filter").document("Filter").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            preference = new Preference(documentSnapshot.getData());
+                            preference.updateData(filter_flag);
+                            db.collection("Filter").document("Filter").update(preference.toPreference());
+                        }
+                    });
+                }
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("공유 범위를 선택하세요")
+                        .setItems(shareWhich, new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int index){
+                                if (index == 0) {
+                                    // 파베에 올림
+                                    // preference firestore로
+                                    //showDialog();
+
+                                    Post post = new Post(firebaseAuth.getCurrentUser().getDisplayName(),
+                                            getDate_and_time_Korean(), 0);
+
+                                    // toast 출력
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    Map<String, Object> postValue = null;
+                                    postValue = post.toMap();
+                                    final String name = db.collection("Post").document().getId();
+                                    db.collection("Post").document(name).set(postValue).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(name + "jpg");
+                                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                            changed.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                            byte[] data = baos.toByteArray();
+                                            UploadTask uploadTask = mStorageRef.putBytes(data);
+                                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    //hideDialog();
+                                                    finish();
+                                                    Toast.makeText(ChangeStyleActivity.this, "사진을 공유했습니다", Toast.LENGTH_SHORT).show();
+                                                    //hideDialog();
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                }
+                                else {
+                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                    Log.v("error?", changed.toString());
+
+                                    String imagePath = saveToInternalStorage(changed);
+                                    Uri shareUri = Uri.parse(imagePath);
+
+                                    sharingIntent.setType("image/*");
+                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, shareUri);
+                                    startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                                }
+                            }
+                        }).setCancelable(true)
+                        .show();
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
             }
         });
 
@@ -330,4 +465,30 @@ public class ChangeStyleActivity extends AppCompatActivity {
 
         return datestr;
     }
+
+    public String getDate_and_time_Korean()
+    {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        String datestr = sdf.format(cal.getTime());
+
+        return datestr;
+    }
+
+    /*
+
+    private void showDialog(){
+        mProgressbar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    private void hideDialog(){
+        if(mProgressbar.getVisibility() == View.VISIBLE){
+            mProgressbar.setVisibility(View.INVISIBLE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+
+     */
 }
