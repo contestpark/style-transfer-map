@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.skku.map.changer">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,37 +9,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragment.FragmentAnalysis"></activity>
+        <activity android:name=".PostDetailActivity"></activity>
+        <activity android:name=".fragment.FragmentAnalysis" />
         <activity android:name=".ChangeStyleActivity" />
+        <activity android:name=".PostDetailActivity" />
         <activity android:name=".fragment.FragmentCommunity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="image/jpeg"/>
-                <data android:mimeType="image/png"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/jpeg" />
+                <data android:mimeType="image/png" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name="ai.fritz.core.FritzCustomModelService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <meta-data
             android:name="fritz_api_key"
             android:value="5168cce7d9794bc299881a6d6966e1b1" />
 
-
+        <service
+            android:name="ai.fritz.core.FritzCustomModelService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

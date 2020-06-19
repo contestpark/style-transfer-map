@@ -3,6 +3,7 @@ package edu.skku.map.changer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;

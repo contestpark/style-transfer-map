@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FragmentAnalysis">
+    android:background="@color/colorPrimary">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        tools:context=".fragment.FragmentCommunity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="분석"
+            android:textSize="30dp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/dotumbold"
+            android:textColor="@color/colorFont"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:fontFamily="@font/dotummedium"
+            android:textColor="@color/colorGray"
+            android:layout_marginLeft="5dp"
+            android:text="가장 많이 쓴 필터를 비교해 보세요"/>
+
+        <com.github.mikephil.charting.charts.RadarChart
+            android:id="@+id/chart_analysis"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="310dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/dotummedium"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginLeft="5dp"
+            android:text="박경연님은 뭉크의 절규 필터를 가장 많이 사용하셨습니다"/>
+
+        <Button
+            android:layout_marginTop="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="로그아웃"
+            android:fontFamily="@font/dotumbold"
+            android:textSize="17dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="20"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <TextView
+                android:id="@+id/loginTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="로그인"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorFont"
+                android:textSize="35dp"
+                android:fontFamily="@font/dotumbold"
+                android:textStyle="bold"
+                android:layout_marginBottom="60dp"/>
+
+            <Button
+                android:id="@+id/google_sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="120dp"
+                android:background="@drawable/button_google"
+                android:drawableStart="@drawable/googlelogo_white"
+                android:elevation="2dp"
+                android:paddingLeft="15dp"
+                android:text="구글 계정으로 로그인"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_l"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:visibility="invisible"/>
+
+</FrameLayout>

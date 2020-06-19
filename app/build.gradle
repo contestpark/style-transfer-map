@@ -39,6 +39,11 @@ dependencies {
     implementation "ai.fritz:core:6.0.0-beta.6"
     implementation "ai.fritz:vision:6.0.0-beta.6"
     implementation 'ai.fritz:vision-style-painting-models:3.0.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" } // android chart
+    }
 
     implementation 'com.github.armcha:SpaceNavigationView:1.6.0'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
