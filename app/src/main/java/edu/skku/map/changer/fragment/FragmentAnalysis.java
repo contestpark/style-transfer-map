@@ -288,16 +288,16 @@ public class FragmentAnalysis extends Fragment {
                 "세베리니의 Ritmo Plastico", "망원경", "마름모"};
 
         if (myPreference.getGogh() > max) {max = myPreference.getGogh(); maximumPref = mActivities[0];}
-        else if (myPreference.getMunch() > max) {max = myPreference.getGogh(); maximumPref = mActivities[1];}
-        else if (myPreference.getMonet() > max) {max = myPreference.getGogh(); maximumPref = mActivities[2];}
-        else if (myPreference.getLichtenstein() > max) {max = myPreference.getGogh(); maximumPref = mActivities[3];}
-        else if (myPreference.getPicasso() > max) {max = myPreference.getGogh(); maximumPref = mActivities[4];}
-        else if (myPreference.getKutter() > max) {max = myPreference.getGogh(); maximumPref = mActivities[5];}
-        else if (myPreference.getChirico() > max) {max = myPreference.getGogh(); maximumPref = mActivities[6];}
-        else if (myPreference.getNolan() > max) {max = myPreference.getGogh(); maximumPref = mActivities[7];}
-        else if (myPreference.getSeverini() > max) {max = myPreference.getGogh(); maximumPref = mActivities[8];}
-        else if (myPreference.getKaleidoscope() > max) {max = myPreference.getGogh(); maximumPref = mActivities[9];}
-        else if (myPreference.getRhombuses() > max) {max = myPreference.getGogh(); maximumPref = mActivities[10];}
+        if (myPreference.getMunch() > max) {max = myPreference.getMunch(); maximumPref = mActivities[1];}
+        if (myPreference.getMonet() > max) {max = myPreference.getMonet(); maximumPref = mActivities[2];}
+        if (myPreference.getLichtenstein() > max) {max = myPreference.getLichtenstein(); maximumPref = mActivities[3];}
+        if (myPreference.getPicasso() > max) {max = myPreference.getPicasso(); maximumPref = mActivities[4];}
+        if (myPreference.getKutter() > max) {max = myPreference.getKutter(); maximumPref = mActivities[5];}
+        if (myPreference.getChirico() > max) {max = myPreference.getChirico(); maximumPref = mActivities[6];}
+        if (myPreference.getNolan() > max) {max = myPreference.getNolan(); maximumPref = mActivities[7];}
+        if (myPreference.getSeverini() > max) {max = myPreference.getSeverini(); maximumPref = mActivities[8];}
+        if (myPreference.getKaleidoscope() > max) {max = myPreference.getKaleidoscope(); maximumPref = mActivities[9];}
+        if (myPreference.getRhombuses() > max) {max = myPreference.getRhombuses(); maximumPref = mActivities[10];}
 
         return maximumPref;
     }
