@@ -70,6 +70,7 @@ import edu.skku.map.changer.entities.Filter;
 import edu.skku.map.changer.entities.FilterAdapter;
 import edu.skku.map.changer.entities.Post;
 import edu.skku.map.changer.entities.Preference;
+import edu.skku.map.changer.fragment.FragmentCommunity;
 
 public class ChangeStyleActivity extends AppCompatActivity {
     private Uri uri;
@@ -104,7 +105,11 @@ public class ChangeStyleActivity extends AppCompatActivity {
         back_button = findViewById(R.id.back_button_change_style);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { finish(); }});
+            public void onClick(View v) {
+                Intent intent1 = new Intent(ChangeStyleActivity.this, MainActivity.class);
+                startActivity(intent1);
+                finish();
+            }});
         recyclerView = findViewById(R.id.rv_filter);
        // mProgressbar = findViewById(R.id.progressBar_c);
 
@@ -334,7 +339,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
 
-                                            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(name + "jpg");
+                                            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(name);
                                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                             changed.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                             byte[] data = baos.toByteArray();
@@ -343,7 +348,6 @@ public class ChangeStyleActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                     //hideDialog();
-                                                    finish();
                                                     Toast.makeText(ChangeStyleActivity.this, "사진을 공유했습니다", Toast.LENGTH_SHORT).show();
                                                     //hideDialog();
                                                 }
@@ -370,9 +374,6 @@ public class ChangeStyleActivity extends AppCompatActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
-
-
             }
         });
 

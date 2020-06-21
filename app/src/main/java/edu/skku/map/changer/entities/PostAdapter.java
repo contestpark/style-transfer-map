@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder>{
         holder.profile.setImageBitmap(list.get(position).profile);
         holder.name.setText(list.get(position).name);
         holder.heart.setText(list.get(position).heart);
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
+                intent.putExtra("name", list.get(position).name);
+                intent.putExtra("heart", list.get(position).heart);
+                //intent.putExtra("profile", list.get(position).profile);
+                intent.putExtra("id", list.get(position).id);
+                intent.putExtra("date", list.get(position).date);
+
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -45,26 +60,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder>{
 
 
 
-class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class PostViewHolder extends RecyclerView.ViewHolder{
     ImageView image;
     ImageView profile;
     TextView name;
     TextView heart;
+    LinearLayout layout;
 
     public PostViewHolder(@NonNull View postView) {
         super(postView);
 
         image = postView.findViewById(R.id.image_post);
+        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         profile = postView.findViewById(R.id.profile_post);
         name = postView.findViewById(R.id.name_post);
         heart = postView.findViewById(R.id.heart_post);
-
-
-        postView.setOnClickListener(this);
-    }
-
-    public void onClick(View v) {
-        Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
-        v.getContext().startActivity(intent);
+        layout = postView.findViewById(R.id.layout_post);
     }
 }//Holder

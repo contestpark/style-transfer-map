@@ -70,6 +70,7 @@
             android:textColor="@color/colorPrimary"
             android:layout_gravity="bottom"
             android:layout_weight="20"
+            android:layout_marginTop="150dp"
             android:fontFamily="@font/dotumbold"
             android:text="로그아웃"
             android:textSize="17dp" />

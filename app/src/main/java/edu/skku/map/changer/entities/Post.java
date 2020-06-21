@@ -11,6 +11,7 @@ public class Post {
     Bitmap image ;
     String heart;
     String date;
+    String id = "";
 
     public Post(String name, Bitmap profile, Bitmap image, int heart, String date){
         this.name = name;
@@ -38,7 +39,7 @@ public class Post {
         else this.name = "";
         if (map.get("heart") != null) this.heart = map.get("heart").toString();
         else this.heart = "";
-        if (map.get("date") != null) this.date = ((Long) map.get("date")).toString();
+        if (map.get("date") != null) this.date = map.get("date").toString();
         else this.date = "";
     }
 
@@ -52,6 +53,13 @@ public class Post {
         return result;
     }
 
+    public void updateHeart(int num)
+    {
+        int temp = Integer.parseInt(this.heart);
+        heart = String.valueOf(temp + num);
+    }
+
+
 
     public String getName() { return this.name; }
     public void setName(String name) { this.name = name; }
@@ -63,5 +71,7 @@ public class Post {
     public void setHeart(String  heart) { this.heart = heart; }
     public String getDate() { return this.date; }
     public void setDate(String date) { this.date = date; }
+    public String getId() { return this.id; }
+    public void setId(String id) { this.id = id; }
 
 }
