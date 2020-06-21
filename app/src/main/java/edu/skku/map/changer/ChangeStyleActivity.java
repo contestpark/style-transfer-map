@@ -143,7 +143,7 @@ public class ChangeStyleActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "오류가 발생했습니다", Toast.LENGTH_SHORT).show();
-            finish();
+            //finish();
         }
 
         // filter 받아오기
@@ -492,4 +492,11 @@ public class ChangeStyleActivity extends AppCompatActivity {
     }
 
      */
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent1 = new Intent(ChangeStyleActivity.this, MainActivity.class);
+        startActivity(intent1);
+        finish();
+    }
 }

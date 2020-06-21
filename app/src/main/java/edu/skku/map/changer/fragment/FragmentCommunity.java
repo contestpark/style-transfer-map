@@ -50,6 +50,7 @@ public class FragmentCommunity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_community, container, false);
         recyclerView = rootView.findViewById(R.id.rv_post);
+        recyclerView.setNestedScrollingEnabled(false);
         mProgressBar = rootView.findViewById(R.id.progressBar_com);
 
         /*

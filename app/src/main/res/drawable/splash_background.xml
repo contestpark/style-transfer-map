@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-</selector>
+    <item android:drawable="@drawable/background" />
+
+    <item
+        android:drawable="@drawable/splash1"
+        android:gravity="center"
+        android:bottom="70dp"
+        android:width="154dp"
+        android:height="36dp"/>
+
+</layer-list>

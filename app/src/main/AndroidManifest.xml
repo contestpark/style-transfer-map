@@ -9,12 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostDetailActivity"></activity>
-        <activity android:name=".fragment.FragmentAnalysis" />
-        <activity android:name=".ChangeStyleActivity" />
-        <activity android:name=".fragment.FragmentCommunity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".PostDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".fragment.FragmentAnalysis"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ChangeStyleActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".fragment.FragmentCommunity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,6 +44,8 @@
                 <data android:mimeType="image/png" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <meta-data
             android:name="fritz_api_key"

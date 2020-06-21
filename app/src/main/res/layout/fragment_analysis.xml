@@ -1,80 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="10dp"
     android:background="@color/colorPrimary">
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        tools:context=".fragment.FragmentCommunity">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="분석"
-                android:textSize="30dp"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/dotumbold"
-                android:textColor="@color/colorFont"/>
+                android:orientation="vertical"
+                android:layout_gravity="top"
+                tools:context=".fragment.FragmentCommunity">
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/dotumbold"
+                    android:text="분석"
+                    android:textColor="@color/colorFont"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/dotummedium"
+                    android:text="가장 많이 쓴 필터를 비교해 보세요"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17dp" />
+
+                <com.github.mikephil.charting.charts.RadarChart
+                    android:id="@+id/chart_analysis"
+                    android:layout_width="match_parent"
+                    android:layout_height="310dp"
+                    android:layout_marginTop="50dp" />
+
+                <TextView
+                    android:id="@+id/text_analysis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/dotummedium"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="17dp" />
+
+                <Button
+                    android:id="@+id/logout_analysis"
+                    android:background="@drawable/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="75dp"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="@font/dotumbold"
+                    android:text="로그아웃"
+                    android:textSize="17dp" />
+
+            </LinearLayout>
+
+            <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:fontFamily="@font/dotummedium"
-                android:textColor="@color/colorGray"
-                android:layout_marginLeft="5dp"
-                android:text="가장 많이 쓴 필터를 비교해 보세요"/>
+                android:id="@+id/progressBar_a"
+                android:layout_gravity="center_vertical"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"/>
 
-            <com.github.mikephil.charting.charts.RadarChart
-                android:id="@+id/chart_analysis"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="310dp" />
+        </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/dotummedium"
-                android:text="박경연님은 뭉크의 절규 필터를 가장 많이 사용하셨습니다"
-                android:textColor="@color/colorDarkGray"
-                android:textSize="17dp" />
+    </ScrollView>
 
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/logout_analysis"
-            android:background="@drawable/button"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="bottom"
-            android:layout_weight="20"
-            android:layout_marginTop="150dp"
-            android:fontFamily="@font/dotumbold"
-            android:text="로그아웃"
-            android:textSize="17dp" />
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

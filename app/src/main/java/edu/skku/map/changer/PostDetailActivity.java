@@ -116,6 +116,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 //finish();
                 Intent intent1 = new Intent(PostDetailActivity.this, MainActivity.class);
                 startActivity(intent1);
+                finish();
             }
         });
 
@@ -186,5 +187,13 @@ public class PostDetailActivity extends AppCompatActivity {
         String datestr = sdf.format(cal.getTime());
 
         return datestr;
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent1 = new Intent(PostDetailActivity.this, MainActivity.class);
+        startActivity(intent1);
+        finish();
     }
 }

@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity
                         }
                         else {
                             hideDialog();
-                            Toast toast = Toast.makeText(getApplicationContext(), "로그인에 실패했습니다", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "인터넷 상태를 확인해 주세요", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }

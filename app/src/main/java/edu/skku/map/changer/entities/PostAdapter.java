@@ -1,5 +1,6 @@
 package edu.skku.map.changer.entities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder>{
                 intent.putExtra("date", list.get(position).date);
 
                 v.getContext().startActivity(intent);
+                ((Activity)v.getContext()).finish();
             }
         });
     }

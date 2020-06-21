@@ -31,6 +31,15 @@ public class Preference {
         this.Rhombuses = list.get(10);
     }
 
+    public int sumPreference()
+    {
+        int sum = this.Gogh + this.Munch + this.Monet + this.Lichtenstein + this.Picasso
+                + this.Kutter + this.Chirico + this.Nolan + this.Severini + this.Kaleidoscope
+                + this.Rhombuses;
+
+        return sum;
+    }
+
     public Preference() {
         this.Gogh = 0;
         this.Munch = 0;
@@ -104,5 +113,47 @@ public class Preference {
 
     }
 
+    public int getChirico() {
+        return Chirico;
+    }
 
+    public int getGogh() {
+        return Gogh;
+    }
+
+    public int getKaleidoscope() {
+        return Kaleidoscope;
+    }
+
+    public int getKutter() {
+        return Kutter;
+    }
+
+    public int getLichtenstein() {
+        return Lichtenstein;
+    }
+
+    public int getMonet() {
+        return Monet;
+    }
+
+    public int getMunch() {
+        return Munch;
+    }
+
+    public int getNolan() {
+        return Nolan;
+    }
+
+    public int getPicasso() {
+        return Picasso;
+    }
+
+    public int getRhombuses() {
+        return Rhombuses;
+    }
+
+    public int getSeverini() {
+        return Severini;
+    }
 }
